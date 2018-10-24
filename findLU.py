@@ -2,7 +2,6 @@ def halfsearch(a, x):
     l = 0
     r = len(a) - 1
     while l < r:
-        
         mid = (l + r) / 2
         if (a[mid] <= x):
             l = mid + 1
