@@ -2,6 +2,7 @@
 # refrence : Daniel D. Lee and H. Sebastian Seung: Algorithms 
 #            for Non-negative Matrix Factorization.
 
+
 import DivergenceDistance
 import EuclideanDistance
 import random
@@ -37,6 +38,7 @@ def EucDis(V, r, iterator):
     W = randomMatrix(len(V), r)
     Dis = []
     for i in range(iterator):
+        
         A = MatrixMul(transMatrix(W), V)
         B = MatrixMul(MatrixMul(transMatrix(W), W), H)
 
@@ -63,17 +65,18 @@ def DivDis(V, r, iterator):
     W = randomMatrix(len(V), r)
     Dis = []
     for i in range(iterator):
-        Ori = MatrixMul(H, W)
+        Ori = MatrixMul(W, H)
         "update H"
         for a in range(r):
             for b in range(len(V[0])):
                 suma = 0
                 sumb = 0
                 for c in range(len(V)):
-                    suma += W[c][b] * V[c][b] / Ori[c][b]
-                    sumb += W[c][b]
+                    suma += W[c][a] * V[c][b] / Ori[c][b]
+                    sumb += W[c][a]
                 H[a][b] = H[a][b] * suma / sumb
-                        
+        
+        Ori = MatrixMul(W, H)            
         "update W"
         for a in range(len(V)):
             for b in range(r):
@@ -81,7 +84,7 @@ def DivDis(V, r, iterator):
                 sumb = 0
                 for c in range(len(V)):
                     suma += H[b][c] * V[a][c] / Ori[a][c]
-                    sumb += W[b][c]
+                    sumb += H[b][c]
                 W[a][b] = W[a][b] * suma / sumb
 
         Ori = MatrixMul(W, H)
@@ -89,14 +92,25 @@ def DivDis(V, r, iterator):
         
     return (H, W, Dis)          
     
-def NMF(V, r = 3, iterator = 500, algorithm = EucDis):
+def NMF(V, r = 3, iterator=10, algorithm=EucDis):
     return algorithm(V, r, iterator)
 
 
 if __name__ == '__main__':
 
     A = randomMatrix(4, 4)
-    [H, W, Dis] = NMF(A, 2, iterator = 1000)
-    for i in range(len(Dis)):
-        if i % 100 == 0:
-            print i, Dis[i]
+    [H, W, Dis] = NMF(A, 2, iterator=100)
+    [H, W, Dis2] = NMF(A, 2, iterator=100, algorithm=DivDis)
+    
+    x = [i for i in range(100)]
+    for i in range(1, 100, 1):
+        if (Dis[i] > Dis[i - 1]): print "Fail EucDis", i
+    for i in range(1, 100, 1):
+        if (Dis[i] > Dis2[i - 1]): print "Fail DivDis", i
+    import pylab
+    pylab.plot(x, Dis, label='EucDis')
+    pylab.plot(x, Dis2, label='DivDis')
+    pylab.legend(loc='upper left')
+    pylab.show()
+    #pylab.savefig('Net_Data_Mining_Task_Reading\\image\\Correct_answer.png')
+
