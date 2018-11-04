@@ -13,13 +13,14 @@ def DPAlgo(nums):
         answer = max(answer, sums - mins)
     return answer
 
-def MergeAlgo(nums, l, r):
+
     """
         1: the max sum of sequence's left
         2: the max sum of sequence's mid
         3: the max sum of sequence's right
         4: the sum of sequence
     """
+def MergeAlgo(nums, l, r):
     if l == r:
         return [nums[l], nums[l], nums[l], nums[l]]
     mid = (l + r) / 2;
