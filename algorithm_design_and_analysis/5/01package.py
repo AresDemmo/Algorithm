@@ -1,16 +1,14 @@
 import numpy
 
-def main(A, D):
-    n = len(A)
-    dp = numpy.zeros((n + 1, D + 1), dtype=int)
-    answer = 0
-    for i in range(1, n + 1):
-        for j in range(1, D + 1):
-            if j < A[i - 1][0]:
-                dp[i][j] = dp[i - 1][j]
-            else: 
-                dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - A[i - 1][0]] + A[i - 1][1])
-            answer = max(answer, dp[i][j])
+def main(w, p, c, n, m):
+    B = numpy.zeros(m + 1)
+    V = numpy.zeros(m + 1)
+    B[1] = V[1] = 0
+    s = t = 1
+    next = 2
+    for i in range(n):
+        for j in range(s, t):
+            pass
     return answer
     
 
