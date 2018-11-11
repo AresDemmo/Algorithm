@@ -98,17 +98,23 @@ def DKpackageClassical(W, P, C, n, m):
         s , t = t + 1, cnt - 1
     return V[cnt - 1]
     
+
+def Merge2(A, B, C):
+    return Merge(A, Merge(B, C))
+
 def DKpackageEx(A, C):
     cnt = [[0,0]]
     answer = []
     answer += [cnt]
     for i in range(len(A)):
         cns = []
+        cns1 = []
         for j in range(len(cnt)):
-            if (A[i][0] + cnt[j][0] > C):
-                break
-            cns += [[A[i][0] + cnt[j][0], A[i][1] + cnt[j][1]]]
-        cnt = Merge(cnt, cns)
+            if (A[i][0] + cnt[j][0] <= C):
+                cns += [[A[i][0] + cnt[j][0], A[i][1] + cnt[j][1]]]
+            if (A[i][0] + 2 * cnt[j][0] <= C):
+                cns1 += [[A[i][0] + 2 * cnt[j][0], A[i][1] + 2 * cnt[j][1]]]
+        cnt = Merge2(cnt, cns, cns1)
         answer += [cnt]
     print answer
     return answer
@@ -125,8 +131,6 @@ def DKpackage(A, C):
             cns += [[A[i][0] + cnt[j][0], A[i][1] + cnt[j][1]]]
         cnt = Merge(cnt, cns)
         answer += [cnt]
-    for i in range(len(A)):
-        print A[i]
     return answer
 
 
