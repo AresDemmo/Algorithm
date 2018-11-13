@@ -123,32 +123,42 @@ def DKpackage(A, C):
     answer = []
     cnt = [[0,0]]
     answer += [cnt]
+    haha = 0
     for i in range(len(A)):
         cns = []
         for j in range(len(cnt)):
             if (A[i][0] + cnt[j][0] > C):
                 break
             cns += [[A[i][0] + cnt[j][0], A[i][1] + cnt[j][1]]]
+            haha = max(haha, A[i][1] + cnt[j][1])
         cnt = Merge(cnt, cns)
         answer += [cnt]
+    print haha
     return answer
 
 
 
 if __name__ == '__main__':
-    A = [[1,2], [2,3], [3,2], [3,5]]
-    C = 5
+    """
+    W = [0, 4, 6, 8, 3, 1, 1, 4, 5, 5, 7, 7, 8, 3, 7, 9, 9, 10, 8, 10, 6]
+    P = [0, 1, 5, 1, 8, 4, 8, 7, 4, 6, 1, 4, 4, 5, 5, 7, 1, 8, 2, 7, 1]
+    A = []
+    for i in range(1, len(W)):
+        A += [[W[i], P[i]]]
+    print A
+    C = 50
     DKpackage(A, C)
+    """
 
-    w = [1, 2, 3, 3]
-    p = [2, 3, 2, 5]
-    c = 5
-    n = 4
+
+    W = [0, 4, 6, 8, 3, 1, 1, 4, 5, 5, 7, 7, 8, 3, 7, 9, 9, 10, 8, 10, 6]
+    P = [0, 1, 5, 1, 8, 4, 8, 7, 4, 6, 1, 4, 4, 5, 5, 7, 1, 8, 2, 7, 1]
+    c = 50
+    n = 20
     m = 2 ** (4 + 1)
     m1 = 3 ** (4 + 1)
-    #print DKpackageClassical(w, p, c, n, m)
+    print DKpackageClassical(W, P, c, n, m)
     #print DKpackageClassical(w, p, c, n, m1)
-
 
 """
 0,0 1,2 2,3 3,5

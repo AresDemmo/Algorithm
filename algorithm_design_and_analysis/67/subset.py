@@ -1,7 +1,6 @@
 
 
 def subset(S, M, cnt, sub, cont):
-    global answer
     if cnt == len(S) or cont + S[cnt] > M:
         return
     if (cont + S[cnt] == M):
