@@ -34,4 +34,3 @@ def LIS(A):
 
 if __name__ == '__main__':
     A = [2, 8, 4, -4, 5, 9, 11]
-    print LIS(A)

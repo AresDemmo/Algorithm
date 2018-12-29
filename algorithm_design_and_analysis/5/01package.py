@@ -110,7 +110,6 @@ def DKpackageEx(A, C):
             cns += [[A[i][0] + cnt[j][0], A[i][1] + cnt[j][1]]]
         cnt = Merge(cnt, cns)
         answer += [cnt]
-    print answer
     return answer
 
 def DKpackage(A, C):
@@ -126,7 +125,7 @@ def DKpackage(A, C):
         cnt = Merge(cnt, cns)
         answer += [cnt]
     for i in range(len(A)):
-        print A[i]
+        print(A[i])
     return answer
 
 
