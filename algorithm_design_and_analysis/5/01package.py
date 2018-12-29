@@ -132,12 +132,8 @@ def DKpackage(A, C):
             haha = max(haha, A[i][1] + cnt[j][1])
         cnt = Merge(cnt, cns)
         answer += [cnt]
-<<<<<<< HEAD
     for i in range(len(A)):
         print(A[i])
-=======
-    print haha
->>>>>>> 9545aede536f3c980f09532ed170f63fb53e8d88
     return answer
 
 
@@ -161,7 +157,7 @@ if __name__ == '__main__':
     n = 20
     m = 2 ** (4 + 1)
     m1 = 3 ** (4 + 1)
-    print DKpackageClassical(W, P, c, n, m)
+    #print DKpackageClassical(W, P, c, n, m)
     #print DKpackageClassical(w, p, c, n, m1)
 
 """
