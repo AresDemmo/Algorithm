@@ -24,9 +24,10 @@ def GeneratePackage():
     with open(PackageFileName, "w") as f:
         print(dataNum, file=f)
         for n in range(dataNum):
-            print(n, file=f)
-            print(n * random.randint(1, 5), file=f)
-            for i in range(n):
+            N = n * 100
+            print(N, file=f)
+            print(N * random.randint(1, 5), file=f)
+            for i in range(N):
                 print(random.randint(1, 10), file=f)
                 print(random.randint(1, 10), file=f)
 
@@ -34,6 +35,6 @@ def GenerateEleTable():
     pass
 
 if __name__ == '__main__':
-    GegerateTSP()
+    # GegerateTSP()
     GeneratePackage()
-    GenerateEleTable()
+    #GenerateEleTable()

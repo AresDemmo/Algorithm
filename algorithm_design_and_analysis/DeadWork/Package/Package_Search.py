@@ -1,5 +1,12 @@
-from Queue import PriorityQueue
+from queue import PriorityQueue
 import random
+import math
+import datetime
+import numpy
+
+
+inFilename = 'algorithm_design_and_analysis/DeadWork/data/Package.txt'
+outFilename = 'algorithm_design_and_analysis/DeadWork/Output/Package_Search.txt'
 
 class Node(object):
     def __init__(self, id, par, level, tag, CC, CV, CUB):
@@ -30,11 +37,11 @@ def getNode(par, level, tag, cc, cv, ub):
 def LUBound(P, W, cap, cv, N, k):
     rw = cap
     pvl = cv
-    for i in range(k + 1, N + 1):
+    for i in range(k, N + 1):
         if rw < W[i]:
-            pvu = pvl + rw * P[i] / W[i]
+            pvu = pvl + 1.0 * rw * P[i] / W[i]
             for j in range(i + 1, N + 1):
-                if rw > W[j]:
+                if rw >= W[j]:
                     rw = rw - W[j]
                     pvl = pvl + P[j]
             return (pvl, pvu)
@@ -44,7 +51,9 @@ def LUBound(P, W, cap, cv, N, k):
     return (pvl, pvu)
 
 
-def DKpackage(W, P, N, M, e):
+def DKpackage(P, W, N, M, e):
+    global tables
+    tables = []
     (pvl, pvu) = LUBound(P, W, M, 0, N, 1)
     node = getNode(0, 0, 0, M, 0, pvu)
     prev = pvl - e
@@ -62,24 +71,45 @@ def DKpackage(W, P, N, M, e):
                 prev = cv
                 answer = node
         else:
-            if cap > W[i]:
+            if cap >= W[i]:
                 cntnode = getNode(node.id, i, 1, cap - W[i], cv + P[i], node.CUB)
                 que.put(cntnode)
             (pvl, pvu) = LUBound(P, W, cap, cv, N, i + 1)   
             if pvu > prev:
                 cntnode = getNode(node.id, i, 0, cap, cv, pvl)  
-                que.put(cntnode) 
+                que.put(cntnode)
     return answer
 
 
-
+class Pair(object):
+    def __init__(self, w, p):
+        self.w = w
+        self.p = p
+    def __lt__(self, Other):
+        return 1.0 * self.p / self.w > 1.0 * Other.p / Other.w
 
 if __name__ == '__main__':
-    N = 20
-    M = 50
-    W = [0, 4, 6, 8, 3, 1, 1, 4, 5, 5, 7, 7, 8, 3, 7, 9, 9, 10, 8, 10, 6]
-    P = [0, 1, 5, 1, 8, 4, 8, 7, 4, 6, 1, 4, 4, 5, 5, 7, 1, 8, 2, 7, 1]
 
-    print(W, sum(W))
-    print(P, sum(P))
-    DKpackage(W, P, N, M, 0.01)
+
+    outf = open(outFilename, "w")
+    with open(inFilename) as data:
+        T = int(data.readline())
+        for i in range(T):
+            n = int(data.readline())
+            C = int(data.readline())
+            que = PriorityQueue()
+            for i in range(n):
+                w = int(data.readline())
+                p = int(data.readline())
+                que.put(Pair(w, p))
+            W, P = [0], [0]
+            while not que.empty():
+                node = que.get()
+                W += [node.w]
+                P += [node.p]
+            starttime = datetime.datetime.now()
+            value = DKpackage(P, W, n, C, 0.01)
+            endtime = datetime.datetime.now()
+            time = (endtime - starttime).seconds
+            print(n, time, value.CV,file=outf)
+            print(n, time, value.CV)

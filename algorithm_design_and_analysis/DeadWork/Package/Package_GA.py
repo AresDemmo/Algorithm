@@ -13,12 +13,6 @@ pc = 0.618 #交配概率
 pm = 0.03 #变异概率
 lchrom = 50 #染色体长度
 maxgen = 1000 #最大进化代数
-
-class Node(object):
-    def __init__(self, chrom, weight, fitness, parent1, parent2, cross):
-        self.chrom = [0 for i in range(lchrom)]
-        self.weight = weight
-
         
 
 def readDate(filename):
